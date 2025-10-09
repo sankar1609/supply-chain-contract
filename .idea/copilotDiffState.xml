@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CopilotDiffPersistence">
+    <option name="pendingDiffs">
+      <map>
+        <entry key="$PROJECT_DIR$/../../chaincode-java/build.gradle">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/../../chaincode-java/build.gradle" />
+              <option name="updatedContent" value="plugins {&#10;    id 'java'&#10;}&#10;&#10;group 'org.example.chaincode'&#10;version '1.0-SNAPSHOT'&#10;&#10;repositories {&#10;    mavenCentral()&#10;}&#10;&#10;dependencies {&#10;    implementation 'org.hyperledger.fabric-chaincode-java:fabric-chaincode-shim:2.5.0'&#10;    implementation 'com.owlike:genson:1.5'&#10;    testImplementation 'junit:junit:4.13.2'&#10;}&#10;&#10;sourceCompatibility = 1.8&#10;targetCompatibility = 1.8&#10;&#10;test {&#10;    useJUnit()&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../chaincode-java/src/main/java/org/example/chaincode/Product.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/../../chaincode-java/src/main/java/org/example/chaincode/Product.java" />
+              <option name="updatedContent" value="package org.example.chaincode;&#10;&#10;public class Product {&#10;    private String id;&#10;    private String name;&#10;    private String category;&#10;    private String quantity;&#10;&#10;    public Product(String id, String name, String category, String quantity) {&#10;        this.id = id;&#10;        this.name = name;&#10;        this.category = category;&#10;        this.quantity = quantity;&#10;    }&#10;&#10;    // Getters and setters&#10;    public String getId() { return id; }&#10;    public void setId(String id) { this.id = id; }&#10;    public String getName() { return name; }&#10;    public void setName(String name) { this.name = name; }&#10;    public String getCategory() { return category; }&#10;    public void setCategory(String category) { this.category = category; }&#10;    public String getQuantity() { return quantity; }&#10;    public void setQuantity(String quantity) { this.quantity = quantity; }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/../../chaincode-java/src/test/java/org/example/chaincode/AssetContractTest.java">
+          <value>
+            <PendingDiffInfo>
+              <option name="filePath" value="$PROJECT_DIR$/../../chaincode-java/src/test/java/org/example/chaincode/AssetContractTest.java" />
+              <option name="updatedContent" value="package org.example.chaincode;&#10;&#10;import org.junit.Test;&#10;import static org.junit.Assert.*;&#10;&#10;public class AssetContractTest {&#10;    @Test&#10;    public void testSomething() {&#10;        // Add your test cases here&#10;        assertTrue(true);&#10;    }&#10;}&#10;" />
+            </PendingDiffInfo>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
