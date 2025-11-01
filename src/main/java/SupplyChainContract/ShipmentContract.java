@@ -102,4 +102,44 @@ public class ShipmentContract implements ContractInterface {
         try { results.close(); } catch (Exception e) { /* ignore */ }
         return logs.toArray(new AuditLog[0]);
     }
+
+    // New helper method to place an order (creates a shipment) given productId and quantity
+    @Transaction(intent = Transaction.TYPE.SUBMIT)
+    public Shipment placeOrder(Context ctx, String productId, Integer quantity) {
+        if (quantity == null || quantity <= 0) {
+            throw new ChaincodeException("Quantity must be a positive integer.", "INVALID_QUANTITY");
+        }
+
+        String productKey = "PRODUCT_" + productId;
+        String productJSON = ctx.getStub().getStringState(productKey);
+        if (productJSON == null || productJSON.isEmpty()) {
+            throw new ChaincodeException("Product not found: " + productId, "PRODUCT_NOT_FOUND");
+        }
+
+        Product product = genson.deserialize(productJSON, Product.class);
+        if (product.getQuantity() < quantity) {
+            throw new ChaincodeException("Insufficient product quantity for order.", "INSUFFICIENT_QUANTITY");
+        }
+
+        // Deduct the quantity from the product and persist
+        product.setQuantity(product.getQuantity() - quantity);
+        ctx.getStub().putStringState(productKey, genson.serialize(product));
+
+        // Use the transaction id as the shipment id to ensure uniqueness
+        String shipmentId = ctx.getStub().getTxId();
+        String shipmentKey = "SHIPMENT_" + shipmentId;
+
+        Shipment shipment = new Shipment(shipmentId, productId, "", "", "ORDERED", "", quantity);
+        ctx.getStub().putStringState(shipmentKey, genson.serialize(shipment));
+
+        // Audit log for placing order
+        String logId = "AUDIT_" + ctx.getStub().getTxId();
+        String user = ctx.getClientIdentity().getId();
+        String timestamp = Instant.ofEpochSecond(ctx.getStub().getTxTimestamp().getEpochSecond()).toString();
+        AuditLog log = new AuditLog(logId, "PLACE_ORDER", productId, quantity, user, timestamp, shipmentId);
+        ctx.getStub().putStringState(logId, genson.serialize(log));
+
+        return shipment;
+    }
+
 }
